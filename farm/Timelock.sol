@@ -64,7 +64,7 @@ contract Timelock is ReentrancyGuard {
     );
 
     uint256 public constant GRACE_PERIOD = 14 days;
-    uint256 public constant MINIMUM_DELAY = 6 hours;
+    uint256 public constant MINIMUM_DELAY = 1 minutes; // 6 hours;
     uint256 public constant MAXIMUM_DELAY = 30 days;
 
     uint256 public minDelayReduced = 30; // seconds - to be increased in production
@@ -255,7 +255,7 @@ contract Timelock is ReentrancyGuard {
                     _nativefarmAddress,
                     _pid,
                     _allocPoint,
-                    _withUpdate
+                    _withUpdate,
                     predecessor,
                     salt
                 )
