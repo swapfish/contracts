@@ -119,6 +119,7 @@ contract Timelock is ReentrancyGuard {
     }
 
     function setPendingAdmin(address pendingAdmin_) public {
+        require(pendingAdmin_ != address(0), 'Null address not allowed!');
         // allows one time setting of admin for deployment purposes
         if (admin_initialized) {
             require(msg.sender == address(this), "Timelock::setPendingAdmin: Call must come from Timelock.");
