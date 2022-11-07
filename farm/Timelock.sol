@@ -17,6 +17,7 @@ import "./helpers/ReentrancyGuard.sol";
 interface IMasterChef {
     function add(uint256 _allocPoint, IBEP20 _lpToken, bool _withUpdate) external; 
     function set(uint256 _pid, uint256 _allocPoint, bool _withUpdate) external;
+    function setStartTime(uint256 _startTime) external;
 }
 
 contract Timelock is ReentrancyGuard {
@@ -76,8 +77,8 @@ contract Timelock is ReentrancyGuard {
     uint256 public delay;
     bool public admin_initialized;
 
-    address public constant treasury=0x843D9DEE043483FA7C225a540F7814f75F28cf2D; // TODO
-    address public constant team=0xe5Afd77cAD70578E89e3E7a56ACdE1dD094088A2; // TODO
+    address public constant treasury=0x4685e2980D9708736f20aD8ab833A0f850ea5F59;
+    address public constant team=0xF3d3907Ac0d02627922700aB6ed419F3cF5368C1;
 
     mapping(bytes32 => bool) public queuedTransactions;
 
@@ -313,6 +314,11 @@ contract Timelock is ReentrancyGuard {
     function addPool(address farm, address lpToken) public {
         require(msg.sender == admin, "Timelock::addPool: Call must come from admin.");
         IMasterChef(farm).add(0, IBEP20(lpToken), false);
+    }
+
+    function setStartTime(address farm, uint256 _startTime) public {
+        require(msg.sender == admin, "Timelock::setStartTime: Call must come from admin.");
+        IMasterChef(farm).setStartTime(_startTime);
     }
 
     function withdrawFees(address token) public {
